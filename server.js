@@ -42,80 +42,75 @@ app.get("/scrape", function (req, res) {
         var $ = cheerio.load(response.data);
         //console.log($);
 
-    
+        var array = [];
+
+
         // Now, we grab every h2 within an article tag, and do the following:
         $("article .crd-figure-text__content").each(function (i, element) {
 
-            console.log($(this).children("a").attr("href"));
+            //console.log($(this).children("a").attr("href")); -- Link
+            //console.log($(this).children("a").children("h3").text().trim()); ---Title
+            //console.log($(this).children("p").text().trim()); --->Summary
+
             // Save an empty result object
-        //     var result = {};
-            
-
-        //     // Add the text and href of every link, and save them as properties of the result object
-        //     result.title = $(this)
-        //         .children("a")
-        //         .text();
-        //     result.link = $(this)
-        //         .children("a")
-        //         .attr("href");
-
-        //     // Create a new Article using the `result` object built from scraping
-        //     db.Article.create(result)
-        //         .then(function (dbArticle) {
-        //             // View the added result in the console
-        //             console.log(dbArticle);
+            var result = {};
 
 
-        //         })
-        //         .catch(function (err) {
-        //             // If an error occurred, send it to the client
-        //             return res.json(err);
-        //         });
 
-        //     // If we were able to successfully scrape and save an Article, send a message to the client
-        //     //console.log("Scrape Complete");
-         });
-         $("article .crd-figure-text__content a").each(function (i, element) {
+            // Add the text and href of every link, and save them as properties of the result object
+            result.title = $(this).children("a").children("h3").text().trim();
+            result.link = $(this).children("a").attr("href");
 
-            console.log($(this).children("h3").text());
+            // Create a new Article using the `result` object built from scraping
+            db.Article.create(result)
+                .then(function (dbArticle) {
+                    // View the added result in the console
+                    console.log(dbArticle);
+                    array.push(dbArticle);
+                }).catch(function (err) {
+                    // If an error occurred, send it to the client
+                    return res.json(err);
+                });
 
-         });
+            // .then(function () {
+            //     db.Article.find({})
+            //         .then(function (dbArticle) {
+            //             // If we were able to successfully find Articles, send them back to the client
+            //             res.json(dbArticle.slice(dbArticle.length - 9, dbArticle.length - 1));
+            //         })
+            //         .catch(function (err) {
+            //             // If an error occurred, send it to the client
+            //             res.json(err);
+            //         });
+
+
+        }).then(function () {
+            res.json(array);
+        });
 
     });
-    // .then(function(){
-    //     db.Article.find({})
-    //     .then(function(dbArticle) {
-    //       // If we were able to successfully find Articles, send them back to the client
-    //       res.json(dbArticle.slice(0, 20));
-    //     })
-    //     .catch(function(err) {
-    //       // If an error occurred, send it to the client
-    //       res.json(err);
-    //     });
-        
-    // });
 
 });
 
 // Route for getting all Articles from the db
-app.get("/articles", function(req, res) {
+app.get("/articles", function (req, res) {
     // Grab every document in the Articles collection
     db.Article.find({})
-      .then(function(dbArticle) {
-        // If we were able to successfully find Articles, send them back to the client
-        res.json(dbArticle.slice(21, 41));
-      })
-      .catch(function(err) {
-        // If an error occurred, send it to the client
-        res.json(err);
-      });
-  });
+        .then(function (dbArticle) {
+            // If we were able to successfully find Articles, send them back to the client
+            res.json(dbArticle.slice(dbArticle.length - 9, dbArticle.length - 1));
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+        });
+});
 
-  //Route for the main page
-  app.get("/", function(req, res) {
+//Route for the main page
+app.get("/", function (req, res) {
     res.render("index");
-  });
-  
+});
+
 
 
 // Start the server
