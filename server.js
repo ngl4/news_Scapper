@@ -33,43 +33,67 @@ app.set("view engine", "handlebars");
 
 // Routes
 
+
+
 //Listen to the scrape api route 
 app.get("/scrape", function (req, res) {
 
-    var url = req.body.url;
-    console.log(url);
-
-    axios.get(url).then(function (response) {
+    axios.get("http://www.dallasnews.com/").then(function (response) {
         var $ = cheerio.load(response.data);
+        //console.log($);
 
+    
         // Now, we grab every h2 within an article tag, and do the following:
-        $("article h2").each(function (i, element) {
+        $("article .crd-figure-text__content").each(function (i, element) {
+
+            console.log($(this).children("a").attr("href"));
             // Save an empty result object
-            var result = {};
+        //     var result = {};
+            
 
-            // Add the text and href of every link, and save them as properties of the result object
-            result.title = $(this)
-                .children("a")
-                .text();
-            result.link = $(this)
-                .children("a")
-                .attr("href");
+        //     // Add the text and href of every link, and save them as properties of the result object
+        //     result.title = $(this)
+        //         .children("a")
+        //         .text();
+        //     result.link = $(this)
+        //         .children("a")
+        //         .attr("href");
 
-            // Create a new Article using the `result` object built from scraping
-            db.Article.create(result)
-                .then(function (dbArticle) {
-                    // View the added result in the console
-                    console.log(dbArticle);
-                })
-                .catch(function (err) {
-                    // If an error occurred, send it to the client
-                    return res.json(err);
-                });
+        //     // Create a new Article using the `result` object built from scraping
+        //     db.Article.create(result)
+        //         .then(function (dbArticle) {
+        //             // View the added result in the console
+        //             console.log(dbArticle);
 
-            // If we were able to successfully scrape and save an Article, send a message to the client
-            res.send("Scrape Complete");
-        });
+
+        //         })
+        //         .catch(function (err) {
+        //             // If an error occurred, send it to the client
+        //             return res.json(err);
+        //         });
+
+        //     // If we were able to successfully scrape and save an Article, send a message to the client
+        //     //console.log("Scrape Complete");
+         });
+         $("article .crd-figure-text__content a").each(function (i, element) {
+
+            console.log($(this).children("h3").text());
+
+         });
+
     });
+    // .then(function(){
+    //     db.Article.find({})
+    //     .then(function(dbArticle) {
+    //       // If we were able to successfully find Articles, send them back to the client
+    //       res.json(dbArticle.slice(0, 20));
+    //     })
+    //     .catch(function(err) {
+    //       // If an error occurred, send it to the client
+    //       res.json(err);
+    //     });
+        
+    // });
 
 });
 
@@ -79,7 +103,7 @@ app.get("/articles", function(req, res) {
     db.Article.find({})
       .then(function(dbArticle) {
         // If we were able to successfully find Articles, send them back to the client
-        res.json(dbArticle);
+        res.json(dbArticle.slice(21, 41));
       })
       .catch(function(err) {
         // If an error occurred, send it to the client

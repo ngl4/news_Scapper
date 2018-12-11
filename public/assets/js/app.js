@@ -1,13 +1,10 @@
 $(function() {
     $(document).on("click", "#scrapeBtn", function(){
         $.ajax({
-            method: "POST",
-            url: "/scrape",
-            data: {
-                url: "http://www.echojs.com/"
-            }
+            method: "GET",
+            url: "/scrape"
           }).then(function(response) {
-            
+            console.log(response);            
           });
     });
 });
