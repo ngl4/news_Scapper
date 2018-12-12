@@ -6,6 +6,8 @@
     <title>News Scrapping Application</title>
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="/assets/js/app.js"></script>
+    {{!-- Google Font --}}
+    <link href="https://fonts.googleapis.com/css?family=Allura" rel="stylesheet">
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
@@ -15,20 +17,30 @@
 
 <style>
     h2 {
-        margin-top: 200px;
+      padding-top: 100px;
     }
 </style>
 
 <body>
-    <header>
-        <div class="container">
-            <div class="center-align">
-                <h2>Mongo News Scrapper</h2>
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper #26a69a teal lighten-1">
+                <div class="container">
+                    <a href="/" class="brand-logo"><span style="font-family: 'Allura', cursive; font-size: 40px">newS</span>crapper</a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/saved">Saved Articles</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
+        </nav>
+    </div>
 
-    </header>
     {{{ body }}}
 </body>
+
+<footer>
+
+</footer>
 
 </html>
