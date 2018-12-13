@@ -87,16 +87,16 @@ app.get("/articles", function (req, res) {
 });
 
 //Route for getting all saved Articles from the db
-app.get("/savedArticles", function(req, res) {
-    db.SavedArticle.find({}).then(function(dbSavedArticles){
+app.get("/savedArticles", function (req, res) {
+    db.SavedArticle.find({}).then(function (dbSavedArticles) {
         res.json(dbSavedArticles);
-    }).catch(function(err){
+    }).catch(function (err) {
         res.json(err);
 
     });
 });
 
-app.post("/save", function(req, res) {
+app.post("/save", function (req, res) {
 
     //console.log(req.body.title, req.body.link);
 
@@ -105,9 +105,9 @@ app.post("/save", function(req, res) {
         link: req.body.link
     }
 
-    db.SavedArticle.create(result).then(function(dbSavedArticle){
+    db.SavedArticle.create(result).then(function (dbSavedArticle) {
         res.end();
-    }).catch(function(err){
+    }).catch(function (err) {
         res.json(err);
     })
 });
@@ -119,12 +119,7 @@ app.get("/", function (req, res) {
 
 //Route for the saved page
 app.get("/saved", function (req, res) {
-    db.SavedArticle.find({}).then(function(dbSavedArticle){
-        res.render("saved", {
-            savedArticles: dbSavedArticle
-        });
-    })
-    
+        res.render("saved");
 });
 
 

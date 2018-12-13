@@ -25,11 +25,11 @@
     <div class="row container" style="margin-bottom:100px; margin-top: 50px">
 
         {{!-- Show no articles notice when there are no articles --}}
-        {{!-- <div class="center-align" id="noSavedArticleNotice">
+        {{!-- <div class="center-align" id="noSavedArticleNotice" style="display: none">
             <h5 class="red-text text-lighten-2">No Articles Saved</h5>
         </div> --}}
 
-        <div id="displayResults">
+        <div id="displaySavedResults" style="display: block">
             <div class="card-panel white row">
                 <table>
                     <thead>
@@ -44,8 +44,8 @@
 
 
 
-                    <tbody>
-                        {{#each savedArticles}}
+                    <tbody id="savedResults">
+                        {{!-- {{#each savedArticles}}
                         <tr>
                             <td>
                                 <h6><strong>{{this.title}}</strong></h6> <span><a href="{{this.link}}">Read More</a></span>
@@ -53,7 +53,9 @@
                             <td><a class="waves-effect waves-light btn" >Comment</a></td>
                             <td><a class="waves-effect waves-light btn red lighten-2">Delete</a></td></td>
                         </tr>
-                        {{/each}}
+                        {{/each}} --}}
+
+                        
                     </tbody>
 
                 </table>
