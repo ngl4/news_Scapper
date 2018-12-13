@@ -1,4 +1,5 @@
 $(function () {
+    // $('.parallax').parallax();
     $(document).on("click", "#scrapeBtn", function () {
         $("#noArticleNotice").hide();
         $.ajax({
@@ -54,43 +55,14 @@ $(function () {
                     savedBtn.addClass("waves-effect waves-light btn red lighten-2");
                     savedBtn.attr("style", "margin-left: 10px; margin-bottom: 20px; margin-top: 15px");
                     savedBtn.attr("id", "savedBtn");
+                    savedBtn.attr("data-title", elem.title);
+                    savedBtn.attr("data-link", elem.link)
                     savedBtn.text("Save Article");
                     newRowButton.append(savedBtn);
 
                     newRow.append(newRowTitle);
                     newRow.append(newRowButton);
                     tableBody.append(newRow);
-                    
-                    // var titleDiv = $("<div>")
-                    // titleDiv.addClass("col s9")
-
-                    // var title = $("<h5>");
-                    // title.text(elem.title);
-                    // titleDiv.append(title);
-
-                    // var link = $("<a>");
-                    // link.attr("href", elem.link);
-                    // link.attr("target", "_blank");
-                    // link.text("Read more");
-                    // titleDiv.append(link);
-                    // titleDiv.append("<hr style='opacity:0.2'>");
-
-                    // var buttonDiv = $("<div>");
-                    // buttonDiv.addClass("col s2");
-
-                    // var savedBtn = $("<button>")
-                    // savedBtn.addClass("waves-effect waves-light btn red");
-                    // savedBtn.attr("style", "margin-left: 10px; margin-bottom: 20px");
-                    // savedBtn.attr("id", "savedBtn")
-                    // savedBtn.text("Save Article")
-                    // buttonDiv.append(savedBtn);
-                    // buttonDiv.append("<hr style='opacity:0.2'>");
-
-
-                    // resultsDiv.append(titleDiv);
-                    // resultsDiv.append(buttonDiv);
-
-
                 });
 
                 
@@ -102,7 +74,7 @@ $(function () {
     });
 
     $(document).on("click", "#savedBtn", function () {
-
+        var save1Article = $(this).data();
+        $.post("/save", save1Article);
     });
-
 });

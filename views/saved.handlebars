@@ -1,5 +1,63 @@
-<div class="container">
+{{!-- <div class="container">
     <div class="center-align">
         <h2>Saved Articles</h2>
+    </div>
+</div> --}}
+
+<div>
+    {{!-- <div class="parallax"> --}}
+        {{!-- <img src="./assets/images/bg-city.jpeg" style="z-index: -1; height: 5em; margin-top: 0px; background-position-y: 25%;">
+        --}}
+        <div style="background: url('./assets/images/bg-city.jpeg'); height: 29em; margin-top: -35px">
+            <div class="container">
+                <div class="left-align text-white">
+                    <h2 style="font-family: 'Allura', cursive;">Saved Articles</h2>
+                </div>
+
+            </div>
+            <br>
+        </div>
+        {{!-- </div> --}}
+</div>
+
+<div class="section white">
+
+    <div class="row container" style="margin-bottom:100px; margin-top: 50px">
+
+        {{!-- Show no articles notice when there are no articles --}}
+        {{!-- <div class="center-align" id="noSavedArticleNotice">
+            <h5 class="red-text text-lighten-2">No Articles Saved</h5>
+        </div> --}}
+
+        <div id="displayResults">
+            <div class="card-panel white row">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <h5><strong>Your Saved Articles</strong></h5>
+                            </th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+
+
+                    <tbody>
+                        {{#each savedArticles}}
+                        <tr>
+                            <td>
+                                <h6><strong>{{this.title}}</strong></h6> <span><a href="{{this.link}}">Read More</a></span>
+                            </td>
+                            <td><a class="waves-effect waves-light btn" >Comment</a></td>
+                            <td><a class="waves-effect waves-light btn red lighten-2">Delete</a></td></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
     </div>
 </div>

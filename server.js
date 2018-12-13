@@ -60,7 +60,7 @@ app.get("/scrape", function (req, res) {
             db.Article.create(result)
                 .then(function (dbArticle) {
                     // View the added result in the console
-                    console.log(dbArticle);
+                    //console.log(dbArticle);
 
                 }).catch(function (err) {
                     // If an error occurred, send it to the client
@@ -86,6 +86,32 @@ app.get("/articles", function (req, res) {
         });
 });
 
+//Route for getting all saved Articles from the db
+app.get("/savedArticles", function(req, res) {
+    db.SavedArticle.find({}).then(function(dbSavedArticles){
+        res.json(dbSavedArticles);
+    }).catch(function(err){
+        res.json(err);
+
+    });
+});
+
+app.post("/save", function(req, res) {
+
+    //console.log(req.body.title, req.body.link);
+
+    var result = {
+        title: req.body.title,
+        link: req.body.link
+    }
+
+    db.SavedArticle.create(result).then(function(dbSavedArticle){
+        res.end();
+    }).catch(function(err){
+        res.json(err);
+    })
+});
+
 //Route for the main page
 app.get("/", function (req, res) {
     res.render("index");
@@ -93,7 +119,12 @@ app.get("/", function (req, res) {
 
 //Route for the saved page
 app.get("/saved", function (req, res) {
-    res.render("saved");
+    db.SavedArticle.find({}).then(function(dbSavedArticle){
+        res.render("saved", {
+            savedArticles: dbSavedArticle
+        });
+    })
+    
 });
 
 
