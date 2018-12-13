@@ -3,16 +3,29 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>News Scrapping Application</title>
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="/assets/js/app.js"></script>
-    {{!-- Google Font --}}
-    <link href="https://fonts.googleapis.com/css?family=Allura" rel="stylesheet">
+
+
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <link rel="stylesheet" href="/assets/css/style.css" type="text/css" />
+    <!-- jquery cdn -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    {{!-- Google Font --}}
+    <link href="https://fonts.googleapis.com/css?family=Allura" rel="stylesheet">
+        <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="assets/css/materialize.min.css" media="screen,projection" />
+    <!-- CSS  -->
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css" />    
+
+    <!-- Materialize Icon Link-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+
 </head>
 
 <style>
@@ -43,6 +56,9 @@
     </div>
 
     {{{ body }}}
+
+
+
 </body>
 
 <footer class="page-footer teal lighten-1">
@@ -50,19 +66,20 @@
     <div class="container">
         <div class="row">
             <div class="col l9 s12">
-                <h6 class="white-text"> <strong>S</strong>crape, <strong>S</strong>ave And <strong>C</strong>omment Articles</h6>
+                <h6 class="white-text"> <strong>S</strong>crape, <strong>S</strong>ave And <strong>C</strong>omment
+                    Articles</h6>
                 <hr style="opacity: 0.3">
- 
-                        <p class="grey-text text-lighten-4"><i>> Everybody walks past a thousand story ideas every day.
-                                The good
-                                writers are the ones who see five or six of them. Most people don’t see any.
-                                - <strong>Orson Scott</strong> (an American Novelist)</i></p>
-     
 
-                        <p class="grey-text text-lighten-4"><i>> So what are you waiting for? Start Scraping and
-                                Commenting!!!
-                                - <strong>Binh (Cindy) Lam</strong> (a Web Developer)</i></p>
-    
+                <p class="grey-text text-lighten-4"><i>> Everybody walks past a thousand story ideas every day.
+                        The good
+                        writers are the ones who see five or six of them. Most people don’t see any.
+                        - <strong>Orson Scott</strong> (an American Novelist)</i></p>
+
+
+                <p class="grey-text text-lighten-4"><i>> So what are you waiting for? Start Scraping and
+                        Commenting!!!
+                        - <strong>Binh (Cindy) Lam</strong> (a Web Developer)</i></p>
+
             </div>
             <div class="col l1 offset-l2 s12">
                 {{!-- <h5 class="white-text">Links</h5>
@@ -75,6 +92,8 @@
             </div>
         </div>
     </div>
+
+
     <div class="footer-copyright">
         <div class="container">
             © 2018 Copyright BC Lam Portfolio
@@ -82,7 +101,10 @@
         </div>
     </div>
 
-
+        <!--  Scripts-->
+    <script src="/assets/js.materialize/materialize.js"></script>
+    <script src="/assets/js.materialize/init.js"></script>
+    <script src="/assets/js/app.js"></script>
 
 </footer>
 

@@ -1,4 +1,4 @@
-$(function () {
+$(document).ready(function () {
     // $('.parallax').parallax();
     $(document).on("click", "#scrapeBtn", function () {
         $("#noArticleNotice").hide();
@@ -79,7 +79,7 @@ $(function () {
     });
 
     $.get("/savedArticles", function (response) {
-        console.log(response);
+        //console.log(response);
         // not sure why it is not working
         // if (response === []) {
         //     $("#noSavedArticleNotice").attr("style", "display: block");
@@ -90,69 +90,113 @@ $(function () {
         //     $("#noSavedArticleNotice").attr("style", "display: none");
         //     $("#displaySavedResults").attr("style", "display: block");
 
+        response.forEach(function (elem) {
+            var newRow = $("<tr>");
 
-            response.forEach(function (elem) {
-                var newRow = $("<tr>");
+            var newRowTitle = $("<td>");
+            newRowTitle.addClass("col s10");
+            newRowTitle.html("<h6><strong>" + elem.title + "</strong></h6>");
 
-                var newRowTitle = $("<td>");
-                newRowTitle.addClass("col s10");
-                newRowTitle.html("<h6><strong>" + elem.title + "</strong></h6>");
+            var link = $("<a>");
+            link.attr("href", elem.link);
+            link.attr("target", "_blank");
+            link.text("Read more");
+            newRowTitle.append(link);
 
-                var link = $("<a>");
-                link.attr("href", elem.link);
-                link.attr("target", "_blank");
-                link.text("Read more");
-                newRowTitle.append(link);
+            var newRowCommentButton = $("<td>");
+            newRowCommentButton.addClass("");
 
-                var newRowCommentButton = $("<td>");
-                newRowCommentButton.addClass("");
 
-                var commentBtn = $("<a>")
-                commentBtn.addClass("waves-effect waves-light btn teal lighten-2 modal-trigger");
-                commentBtn.attr("id", "commentBtn");
-                commentBtn.attr("data-id", elem.id);
-                commentBtn.attr("href", "#modal " + elem.id);
-                commentBtn.text("Comment");
-                newRowCommentButton.append(commentBtn);
+            //Modal for the Comments Button ******************************************
+            var modalDiv = $("<div>");
+            modalDiv.attr("id", "modal-" + elem._id);
+            modalDiv.addClass("modal modal-fixed-footer");
 
-                var newRowDeleteBtn = $("<td>");
-                newRowDeleteBtn.addClass("");
+            var modalContent = $("<div>");
+            modalContent.addClass("modal-content");
+            var modalheader = $("<h4>");
+            modalheader.text("Comment(s)");
+            var modalsubheader = $("<h6>");
+            modalsubheader.html("Article Name: " + "<u>" +elem.title + "</u>" + "<br>" + "<a href='" + elem.link +"' target='_blank'>Read more</a> <hr>" );
 
-                var deleteBtn = $("<a>")
-                deleteBtn.addClass("waves-effect waves-light btn red lighten-2");
-                deleteBtn.attr("id", "deleteBtn");
-                deleteBtn.attr("data-id", elem.id);
-                deleteBtn.text("Delete");
-                newRowDeleteBtn.append(deleteBtn);
+            //Display Comments
+            var modalDisplayComments = $("<div>");
+            modalDisplayComments.attr("id", "displayComments");
 
-                newRow.append(newRowTitle);
-                newRow.append(newRowCommentButton);
-                newRow.append(newRowDeleteBtn);
-                $("#savedResults").append(newRow);
-            });
+
+            //Input New Comments
+            var modalNewComments = $("<div class='row'>");
+            var newCommentsHeader = $("<h5> New Comments: </h5> <h6><i>(Click on the line to start typing!)</i></h6>");
+            var newCommentsForm = $("<form class='col s12'>");
+            var newCommentsSubmitDiv = $("<div class='row right-align'>");
+            var titleInputField = $("<div class='input-field col s6'> <input id='input_text' type='text' data-length='10'> <label for='input_text'>Title of this Comment</label> </div>");
+            var textAreaField = $("<div class='input-field col s12'> <textarea id='textarea2' class='materialize-textarea' data-length='120'></textarea> <label for='textarea2'>Write your Comment Here</label> </div>");
+            var submitBtn = $("<button id='submitBtn' class='btn waves-effect waves-light' type='submit' name='action'>Submit<i class='material-icons right'>send</i></button>")
+            newCommentsSubmitDiv.append(submitBtn);
+
+            newCommentsForm.append(titleInputField);
+            newCommentsForm.append(textAreaField);
+
+            modalNewComments.append(newCommentsHeader);
+            modalNewComments.append(newCommentsForm);
+            modalNewComments.append(newCommentsSubmitDiv);
+
+            var modalFooter = $("<div class='modal-footer'>");
+            var closeModal = $("<a href='#!' class='modal-close waves-effect waves-green btn-flat'>Close</a>");
+            modalFooter.append(closeModal);
+
+            modalContent.append(modalheader);
+            modalContent.append(modalsubheader);
+            modalContent.append(modalDisplayComments);
+            modalContent.append(modalNewComments);
+
+            modalDiv.append(modalContent);
+            modalDiv.append(modalFooter);
+
+            $("#modal").append(modalDiv);
+            $(".modal").modal();
+
+            // ^ Modal for the Comments Button ***************************************
+            //Modal div must be created before or alongside with the button 
+            //(see above section and below section)
+
+            //Comment Button
+            var commentBtn = $("<button>")
+            commentBtn.addClass("waves-effect waves-light btn teal lighten-2 modal-trigger");
+            commentBtn.attr("id", "commentBtn");
+            commentBtn.attr("data-id", elem._id);
+            commentBtn.attr("data-title", elem.title);
+            commentBtn.attr("data-target", "modal-" + elem._id);
+            commentBtn.text("Comment");
+            newRowCommentButton.append(commentBtn);
+
+            var newRowDeleteBtn = $("<td>");
+            newRowDeleteBtn.addClass("");
+
+            //Delete Button 
+            var deleteBtn = $("<button>")
+            deleteBtn.addClass("waves-effect waves-light btn red lighten-2");
+            deleteBtn.attr("id", "deleteBtn");
+            deleteBtn.attr("data-id", elem._id);
+            deleteBtn.text("Delete");
+            newRowDeleteBtn.append(deleteBtn);
+
+            newRow.append(newRowTitle);
+            newRow.append(newRowCommentButton);
+            newRow.append(newRowDeleteBtn);
+            $("#savedResults").append(newRow);
+        });
         //}
     });
 
-    $(document).on("click", "#commentBtn", function () {
 
-
-
-
-
-        //     <div id="modal1" class="modal modal-fixed-footer">
-        //     <div class="modal-content">
-        //       <h4>Modal Header</h4>
-        //       <p>A bunch of text</p>
-        //     </div>
-        //     <div class="modal-footer">
-        //       <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-        //     </div>
-        //   </div>
+    $(document).on("click", "#submitBtn", function () {
 
     });
 
-    $(document).on("click", "#deleteBtn", function () {
 
+
+    $(document).on("click", "#deleteBtn", function () {
     });
 
 
