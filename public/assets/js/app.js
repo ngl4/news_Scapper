@@ -1,5 +1,6 @@
 $(document).ready(function () {
     // $('.parallax').parallax();
+
     $(document).on("click", "#scrapeBtn", function () {
         $("#noArticleNotice").hide();
         $.ajax({
@@ -79,17 +80,20 @@ $(document).ready(function () {
     });
 
     $.get("/savedArticles", function (response) {
-        //console.log(response);
+        console.log(response);
         // not sure why it is not working
-        // if (response === []) {
-        //     $("#noSavedArticleNotice").attr("style", "display: block");
-        //     $("#displaySavedResults").attr("style", "display: none");
+        if (response.length === 0) {
+            console.log('my conditional evaluated to true');
+            $("#noSavedArticleNotice").attr("style", "display: block");
+            $("#displaySavedResults").attr("style", "display: none");
 
 
-        // } else {
-        //     $("#noSavedArticleNotice").attr("style", "display: none");
-        //     $("#displaySavedResults").attr("style", "display: block");
+        } else {
+            console.log('my conditional evaluated to false');
+            $("#noSavedArticleNotice").attr("style", "display: none");
+            $("#displaySavedResults").attr("style", "display: block");
 
+        
         response.forEach(function (elem) {
             var newRow = $("<tr>");
 
@@ -117,7 +121,7 @@ $(document).ready(function () {
             var modalheader = $("<h4>");
             modalheader.text("Comment(s)");
             var modalsubheader = $("<h6>");
-            modalsubheader.html("Article Name: " + "<u>" +elem.title + "</u>" + "<br>" + "<a href='" + elem.link +"' target='_blank'>Read more</a> <hr>" );
+            modalsubheader.html("Article Name: " + "<u>" + elem.title + "</u>" + "<br>" + "<a href='" + elem.link + "' target='_blank'>Read more</a> <hr>");
 
             //Display Comments
             var modalDisplayComments = $("<div>");
@@ -129,9 +133,10 @@ $(document).ready(function () {
             var newCommentsHeader = $("<h5> New Comments: </h5> <h6><i>(Click on the line to start typing!)</i></h6>");
             var newCommentsForm = $("<form class='col s12'>");
             var newCommentsSubmitDiv = $("<div class='row right-align'>");
-            var titleInputField = $("<div class='input-field col s6'> <input id='input_text' type='text' data-length='10'> <label for='input_text'>Title of this Comment</label> </div>");
-            var textAreaField = $("<div class='input-field col s12'> <textarea id='textarea2' class='materialize-textarea' data-length='120'></textarea> <label for='textarea2'>Write your Comment Here</label> </div>");
+            var titleInputField = $("<div class='input-field col s6'> <input id='titleinput' type='text' data-length='10'> <label for='input_text'>Title of this Comment</label> </div>");
+            var textAreaField = $("<div class='input-field col s12'> <textarea id='bodyinput' class='materialize-textarea' data-length='120'></textarea> <label for='textarea2'>Write your Comment Here</label> </div>");
             var submitBtn = $("<button id='submitBtn' class='btn waves-effect waves-light' type='submit' name='action'>Submit<i class='material-icons right'>send</i></button>")
+            submitBtn.attr("data-id", elem._id);
             newCommentsSubmitDiv.append(submitBtn);
 
             newCommentsForm.append(titleInputField);
@@ -186,18 +191,28 @@ $(document).ready(function () {
             newRow.append(newRowDeleteBtn);
             $("#savedResults").append(newRow);
         });
-        //}
+        }
     });
 
 
     $(document).on("click", "#submitBtn", function () {
+        var news_id = $(this).attr("data-id");
 
+        var commentInput = {
+            title: $("#titleinput").val().trim(),
+            body: $("#bodyinput").val().trim()
+        }
+
+        $.post("/articles/" + news_id, commentInput, function(response){
+            $("#titleinput").empty();
+            $("#bodyinput").empty();
+            window.onload("/saved");
+        });
     });
 
 
 
-    $(document).on("click", "#deleteBtn", function () {
-    });
+    $(document).on("click", "#deleteBtn", function () {});
 
 
 });

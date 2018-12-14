@@ -20,9 +20,13 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/scapper", {
-    useNewUrlParser: true
-});
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scapper";
+
+mongoose.connect(MONGODB_URI);
+
+// mongoose.connect("mongodb://localhost/scapper", {
+//     useNewUrlParser: true
+// });
 
 // Set Handlebars
 var exphbs = require("express-handlebars");
@@ -31,9 +35,9 @@ app.engine("handlebars", exphbs({
 }));
 app.set("view engine", "handlebars");
 
-// Routes
+// Routes (2 types of routes): api and html
 
-
+//1. apiRoutes
 
 //Route for scrapping articles from Dallas News
 app.get("/scrape", function (req, res) {
@@ -112,6 +116,15 @@ app.post("/save", function (req, res) {
     })
 });
 
+app.post("/savedArticles/:id", function(req, res) {
+
+    // update the note section!!!
+
+
+});
+
+//2. htmlRoutes
+
 //Route for the main page
 app.get("/", function (req, res) {
     res.render("index");
@@ -119,9 +132,8 @@ app.get("/", function (req, res) {
 
 //Route for the saved page
 app.get("/saved", function (req, res) {
-        res.render("saved");
+    res.render("saved");
 });
-
 
 
 // Start the server
