@@ -13,6 +13,7 @@ var NoteSchema = new Schema ({
         type: String,
         required: true
     }
+
 });
 
 //After creating Schema, it is time to create Model 

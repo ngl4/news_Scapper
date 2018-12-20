@@ -126,8 +126,42 @@ app.post("/save", function(req, res) {
     });
 });
 
+app.get("/savedArticles/:id", function(req, res){
+  db.SavedArticle.findOne({_id: req.params.id})
+  .populate("notes")
+  .then(function(dbArticle){
+    res.json(dbArticle);
+  }).catch(function(err){
+    res.json(err);
+  });
+});
+
 app.post("/savedArticles/:id", function(req, res) {
-  // update the note section!!!
+  // update the note section based on the saved Articles!!!
+  var result = {
+    title: req.body.title,
+    textbody: req.body.textbody
+  };
+
+  db.Note.create(result)
+  .then(function(dbNote){
+    //console.log(dbNote);
+    return db.SavedArticle.findOneAndUpdate({ _id: req.params.id }, { $push: {notes: dbNote._id} }, { new: true });
+  }).then(function(dbArticle){
+    res.json(dbArticle);
+  }).catch(function(err){
+      res.json(err);
+  });
+});
+
+app.delete("/savedArticles/:id", function(req, res) {
+  db.SavedArticle.deleteOne({_id: req.params.id})
+  .populate("notes")
+  .then(function(dbArticle){
+    res.json(dbArticle);
+  }).catch(function(err){
+    res.json(err);
+  });
 });
 
 //2. htmlRoutes

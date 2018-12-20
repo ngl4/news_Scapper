@@ -13,10 +13,10 @@ var ArticleSchema = new Schema ({
         required: true
     },
     //store Note id (populate Article with an associated Note)
-    note: {
+    notes: [{
         type: Schema.Types.ObjectId,
         ref:"Note"
-    }
+    }]
 
 });
 
