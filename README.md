@@ -5,4 +5,6 @@
 ##### Don't Wait, Find out more here: https://tranquil-plateau-63793.herokuapp.com/  _(please wait a few seconds for it to load!)_
 
 
-![alt text]()
+### Demo
+
+![alt text](https://github.com/ngl4/news_Scapper/blob/master/public/assets/images/newScrapper.gif)
