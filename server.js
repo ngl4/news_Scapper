@@ -146,7 +146,7 @@ app.post("/savedArticles/:id", function(req, res) {
   db.Note.create(result)
   .then(function(dbNote){
     //console.log(dbNote);
-    return db.SavedArticle.findOneAndUpdate({ _id: req.params.id }, { $push: {notes: dbNote._id} }, { new: true });
+    return db.SavedArticle.findOneAndUpdate({ _id: req.params.id }, { $addToSet: {notes: dbNote._id} }, { new: true });
   }).then(function(dbArticle){
     res.json(dbArticle);
   }).catch(function(err){

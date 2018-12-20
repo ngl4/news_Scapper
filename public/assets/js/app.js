@@ -128,7 +128,7 @@ $(document).ready(function() {
 
         //Display Comments
         var modalDisplayComments = $("<div>");
-        modalDisplayComments.attr("id", "displayComments");
+        modalDisplayComments.attr("id", "displayComments_" + elem._id);
 
         //Input New Comments
         var modalNewComments = $("<div class='row'>");
@@ -138,10 +138,10 @@ $(document).ready(function() {
         var newCommentsForm = $("<form class='col s12'>");
         var newCommentsSubmitDiv = $("<div class='row'>");
         var titleInputField = $(
-          "<div class='input-field col s5'> <input class='titleinput' type='text' data-length='10'> <label for='input_text'>Title of this Comment</label> </div>"
+          "<div class='input-field col s5'> <input id='titleinput_"+ elem._id + "' data-id='" + elem._id + "' type='text' data-length='10'> <label for='input_text'>Title of this Comment</label> </div>"
         );
         var textAreaField = $(
-          "<div class='input-field col s10'> <textarea class='bodyinput materialize-textarea' data-length='120'></textarea> <label for='textarea2'>Write your Comment Here</label> </div>"
+          "<div class='input-field col s10'> <textarea id='bodyinput_"+ elem._id + "' class='materialize-textarea' data-length='120'></textarea> <label for='textarea2'>Write your Comment Here</label> </div>"
         );
         var submitBtn = $(
           "<button class='btn waves-effect waves-light col s4 submitBtn' type='submit' name='action'>Submit<i class='material-icons right'>send</i></button>"
@@ -224,7 +224,7 @@ $(document).ready(function() {
             newCommentDiv.append(
               "- _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _ - _"
             );
-            $("#displayComments").prepend(newCommentDiv);
+            $("#displayComments_" + elem._id).prepend(newCommentDiv);
           });
         });
       });
@@ -235,19 +235,19 @@ $(document).ready(function() {
     var news_id = $(this).attr("data-id");
 
     var commentInput = {
-      title: $(".titleinput")
+      title: $("#titleinput_" + news_id)
         .val()
         .trim(),
-      textbody: $(".bodyinput")
+      textbody: $("#bodyinput_" + news_id)
         .val()
         .trim()
     };
 
-    //console.log(commentInput);
+    console.log(commentInput);
 
     $.post("/savedArticles/" + news_id, commentInput, function(response) {
-      $(".titleinput").empty();
-      $(".bodyinput").empty();
+      $("#titleinput_" + news_id).val("");
+      $("#bodyinput_" + news_id).val("");
       //console.log(response);
       location.reload();
     });
