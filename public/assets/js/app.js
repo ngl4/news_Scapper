@@ -243,13 +243,13 @@ $(document).ready(function() {
         .trim()
     };
 
-    console.log(commentInput);
+    //console.log(commentInput);
 
     $.post("/savedArticles/" + news_id, commentInput, function(response) {
       $(".titleinput").empty();
       $(".bodyinput").empty();
-      console.log(response);
-      //location.reload();
+      //console.log(response);
+      location.reload();
     });
   });
 
@@ -260,7 +260,7 @@ $(document).ready(function() {
       url: "/savedArticles/" + news_id,
       method: "DELETE"
     }).then(function(response) {
-      console.log(response);
+      //console.log(response);
       location.reload();
     });
   });
